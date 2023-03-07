@@ -19,5 +19,14 @@ function make_grid_items(col_row_num){
     }
 }
 
+// color random grid items
+function color_in(dim, frac){
+    for (let i = 0; i < dim/frac; i++) {
+        x = Math.floor(Math.random() * (dim + 1))
+        console.log(x)
+    }
+}
+
 set_grid_dimensions(3);
 make_grid_items(3);
+color_in(9, 3)
