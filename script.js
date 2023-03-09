@@ -21,10 +21,23 @@ function make_grid_items(col_row_num){
 
 // color random grid items
 function color_in(dim, frac){
+    var x = [];
     for (let i = 0; i < dim/frac; i++) {
-        x = Math.floor(Math.random() * (dim + 1))
-        console.log(x)
+        var ran_num = Math.floor(Math.random() * dim + 1);
+        // reduce probability that a number appears multiple times in array
+        // needs to be improved
+        if (x.includes(ran_num)) {
+            var other_num = Math.floor(Math.random() * dim + 1);
+            x[i] = other_num;
+            // color grid item blue
+            document.getElementById(x[i]).style.backgroundColor = "#219ebc"
+        }else{
+            x[i] = ran_num;
+            // color grid item blue
+            document.getElementById(x[i]).style.backgroundColor = "#219ebc"
+        }
     }
+
 }
 
 set_grid_dimensions(3);

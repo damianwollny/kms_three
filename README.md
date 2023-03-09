@@ -1,4 +1,7 @@
 # kms_three
 
 TO DO:
-- color_in function
+- time factor - make colors disappear
+- color items upon click
+- compare function
+- (re)start button ?
