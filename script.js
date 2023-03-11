@@ -1,6 +1,9 @@
 // global variables
 const grid = document.getElementById("grid");
 
+// event listeners
+document.getElementById("restart_button").addEventListener("click", game_loop)
+
 // change the dimensions of the grid
 function set_grid_dimensions(dim){
     grid.style.gridTemplateColumns = "repeat("+dim+", 1fr)";
@@ -40,6 +43,19 @@ function color_in(dim, frac){
 
 }
 
-set_grid_dimensions(3);
-make_grid_items(3);
-color_in(9, 3)
+// remove colors
+function clear_grid_items(dim){
+    for (let i = 1; i <= dim; i++) {
+        document.getElementById(i).style.backgroundColor = "#fff";
+    }
+}
+
+
+function game_loop(){
+    set_grid_dimensions(3);
+    make_grid_items(3);
+    color_in(9, 3)
+    setTimeout(function(){clear_grid_items(9)},3000);
+}
+
+game_loop();
