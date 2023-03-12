@@ -5,7 +5,7 @@ var x = [];
 
 // event listeners
 document.getElementById("restart_button").addEventListener("click", game_loop)
-document.getElementById("test_button").addEventListener("click", game_loop)
+document.getElementById("test_button").addEventListener("click", function(){compareArrays(x, red_array);})
 
 // change the dimensions of the grid
 function set_grid_dimensions(dim){
@@ -84,7 +84,6 @@ function game_loop(){
     color_in(9, 3)
     setTimeout(function(){clear_grid_items(9)},3000);
     grid_item_listener(9);
-    compareArrays(x, red_array);
 }
 
 game_loop();
