@@ -2,9 +2,11 @@
 const grid = document.getElementById("grid");
 let red_array = [];
 var x = [];
+let glob_level = 4;
+let difficulty = 5;
 
 // event listeners
-document.getElementById("restart_button").addEventListener("click", game_loop)
+document.getElementById("restart_button").addEventListener("click", init)
 document.getElementById("test_button").addEventListener("click", function(){compareArrays(x, red_array);})
 
 // change the dimensions of the grid
@@ -27,12 +29,12 @@ function make_grid_items(col_row_num){
 
 // automatically color random grid items
 function color_in(dim, frac){
-    for (let i = 0; i < dim/frac; i++) {
-        var ran_num = Math.floor(Math.random() * dim + 1);
+    for (let i = 0; i < (dim ** 2)/frac; i++) {
+        var ran_num = Math.floor(Math.random() * (dim ** 2) + 1);
         // reduce probability that a number appears multiple times in array
         // needs to be improved
         if (x.includes(ran_num)) {
-            var other_num = Math.floor(Math.random() * dim + 1);
+            var other_num = Math.floor(Math.random() * (dim ** 2) + 1);
             x[i] = other_num;
             // color grid item blue
             document.getElementById(x[i]).style.backgroundColor = "#219ebc"
@@ -47,14 +49,14 @@ function color_in(dim, frac){
 
 // remove colors
 function clear_grid_items(dim){
-    for (let i = 1; i <= dim; i++) {
+    for (let i = 1; i <= dim ** 2; i++) {
         document.getElementById(i).style.backgroundColor = "#fff";
     }
 }
 
 // attach event listener to every grid item
 function grid_item_listener(dim){
-    for (let i = 1; i <= dim; i++) {
+    for (let i = 1; i <= (dim ** 2); i++) {
         document.getElementById(i).addEventListener("click", function(){colorbyuser(i)});
     }
 }
@@ -71,19 +73,41 @@ function compareArrays(a, b){
     console.log(a.sort())
     console.log(b.sort())
     if (JSON.stringify(a.sort()) === JSON.stringify(b.sort())){
-        alert("yes")
+        next_level(glob_level++);
     }else{
-        alert("no")
+        alert("Leider falsch")
+        init();
     }
+    red_array = [];
+    
 };
 
-// game loop
-function game_loop(){
-    set_grid_dimensions(3);
-    make_grid_items(3);
-    color_in(9, 3)
-    setTimeout(function(){clear_grid_items(9)},3000);
-    grid_item_listener(9);
+// clear all divs
+function remove_divs(classname){
+    const elements = document.getElementsByClassName(classname);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }
 
-game_loop();
+// game initialization
+function init(){
+    remove_divs("grid_item");
+    set_grid_dimensions(3);
+    make_grid_items(3);
+    color_in(3, difficulty)
+    setTimeout(function(){clear_grid_items(3)},3000);
+    grid_item_listener(3);
+}
+
+// game loop
+function next_level(level){
+    remove_divs("grid_item");
+    set_grid_dimensions(level);
+    make_grid_items(level);
+    color_in(level, difficulty)
+    setTimeout(function(){clear_grid_items(level)},3000);
+    grid_item_listener(level);
+}
+
+init();
