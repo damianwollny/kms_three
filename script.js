@@ -88,10 +88,12 @@ function remove_divs(classname){
     while(elements.length > 0){
         elements[0].parentNode.removeChild(elements[0]);
     }
+    x = [];
 }
 
 // game initialization
 function init(){
+    glob_level = 4;
     remove_divs("grid_item");
     set_grid_dimensions(3);
     make_grid_items(3);
