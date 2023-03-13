@@ -2,6 +2,7 @@
 const grid = document.getElementById("grid");
 let red_array = [];
 var x = [];
+let points_counter = 0;
 let glob_level = 4;
 let difficulty = 5;
 
@@ -86,8 +87,9 @@ function compareArrays(a, b){
     console.log(b.sort())
     if (JSON.stringify(a.sort()) === JSON.stringify(b.sort())){
         next_level(glob_level++);
+        document.getElementById("title").innerHTML = "PUNKTE: " + (++points_counter)
     }else{
-        alert("Leider falsch")
+        alert("Leider falsch\nPUNKTE: " + (points_counter))
         init();
     }
     red_array = [];
@@ -106,6 +108,8 @@ function remove_divs(classname){
 // game initialization
 function init(){
     glob_level = 4;
+    points_counter = 0;
+    document.getElementById("title").innerHTML = "PUNKTE: " + points_counter
     remove_divs("grid_item");
     set_grid_dimensions(3);
     make_grid_items(3);
