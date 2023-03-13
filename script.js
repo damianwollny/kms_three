@@ -1,14 +1,14 @@
 // global variables
 const grid = document.getElementById("grid");
 let red_array = [];
-var x = [];
+var blue_array = [];
 let points_counter = 0;
 let glob_level = 4;
-let difficulty = 5;
+let difficulty = 8;
 
 // event listeners
 document.getElementById("restart_button").addEventListener("click", init)
-document.getElementById("test_button").addEventListener("click", function(){compareArrays(x, red_array);})
+document.getElementById("test_button").addEventListener("click", function(){compareArrays(blue_array, red_array);})
 
 // change the dimensions of the grid
 function set_grid_dimensions(dim){
@@ -24,7 +24,6 @@ function make_grid_items(col_row_num){
         item.setAttribute("class", "grid_item");
         item.setAttribute("id", i+1);
         grid.appendChild(item);
-        console.log(item)
     }
 }
 
@@ -34,18 +33,18 @@ function color_in(dim, frac){
         var ran_num = Math.floor(Math.random() * (dim ** 2) + 1);
         // reduce probability that a number appears multiple times in array
         // needs to be improved
-        if (x.includes(ran_num)) {
+        if (blue_array.includes(ran_num)) {
             var other_num = Math.floor(Math.random() * (dim ** 2) + 1);
-            x[i] = other_num;
+            blue_array[i] = other_num;
             // color grid item blue
-            document.getElementById(x[i]).style.backgroundColor = "#219ebc"
+            document.getElementById(blue_array[i]).style.backgroundColor = "#219ebc"
         }else{
-            x[i] = ran_num;
+            blue_array[i] = ran_num;
             // color grid item blue
-            document.getElementById(x[i]).style.backgroundColor = "#219ebc"
+            document.getElementById(blue_array[i]).style.backgroundColor = "#219ebc"
         }
     }
-
+    console.log("blue_array= ", blue_array)
 }
 
 // remove colors
@@ -68,32 +67,31 @@ function colorbyuser(elem){
     // get current color of grit item
     style = window.getComputedStyle(clicked_item);
     circ_bg = style.getPropertyValue("background-color");
-    console.log(circ_bg);
     if (circ_bg == "rgb(255, 255, 255)") {
-        clicked_item.style.backgroundColor = "red";
+        clicked_item.style.backgroundColor = "#d00000";
         // add grid item to array
         red_array.push(elem);
-        console.log("red=", red_array)
-    }else if (circ_bg == "rgb(255, 0, 0)"){
+    }else if (circ_bg == "rgb(208, 0, 0)"){
         clicked_item.style.backgroundColor = "white";
         // remove grid item from array
         red_array = red_array.filter(function(item) {return item !== elem}) 
     }
+    console.log("red_array=", red_array)
 }
 
 // compare random grid colors with user choice
 function compareArrays(a, b){
-    console.log(a.sort())
-    console.log(b.sort())
     if (JSON.stringify(a.sort()) === JSON.stringify(b.sort())){
-        next_level(glob_level++);
+        glob_level = glob_level + 0.3
+        next_level(Math.floor(glob_level));
         document.getElementById("title").innerHTML = "PUNKTE: " + (++points_counter)
     }else{
-        alert("Leider falsch\nPUNKTE: " + (points_counter))
-        init();
+        // show the mistake
+        for (let k = 0; k < blue_array.length; k++) {
+            document.getElementById(blue_array[k]).style.backgroundColor = "#219ebc";
+        }
     }
     red_array = [];
-    
 };
 
 // clear all divs
@@ -102,7 +100,7 @@ function remove_divs(classname){
     while(elements.length > 0){
         elements[0].parentNode.removeChild(elements[0]);
     }
-    x = [];
+    blue_array = [];
 }
 
 // game initialization
@@ -120,6 +118,7 @@ function init(){
 
 // game loop
 function next_level(level){
+    console.log(glob_level);
     remove_divs("grid_item");
     set_grid_dimensions(level);
     make_grid_items(level);
