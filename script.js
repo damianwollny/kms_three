@@ -63,9 +63,21 @@ function grid_item_listener(dim){
 
 // color grid items upon user click
 function colorbyuser(elem){
-    document.getElementById(elem).style.backgroundColor = "red";
-    red_array.push(elem);
-    console.log("red=", red_array)
+    var clicked_item = document.getElementById(elem)
+    // get current color of grit item
+    style = window.getComputedStyle(clicked_item);
+    circ_bg = style.getPropertyValue("background-color");
+    console.log(circ_bg);
+    if (circ_bg == "rgb(255, 255, 255)") {
+        clicked_item.style.backgroundColor = "red";
+        // add grid item to array
+        red_array.push(elem);
+        console.log("red=", red_array)
+    }else if (circ_bg == "rgb(255, 0, 0)"){
+        clicked_item.style.backgroundColor = "white";
+        // remove grid item from array
+        red_array = red_array.filter(function(item) {return item !== elem}) 
+    }
 }
 
 // compare random grid colors with user choice
