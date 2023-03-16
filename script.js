@@ -44,6 +44,8 @@ function color_in(dim, frac){
             document.getElementById(blue_array[i]).style.backgroundColor = "#219ebc"
         }
     }
+    // remove duplicates
+    blue_array = [...new Set(blue_array)];
     console.log("blue_array= ", blue_array)
 }
 
