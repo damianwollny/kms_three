@@ -4,7 +4,7 @@ let red_array = [];
 var blue_array = [];
 let points_counter = 0;
 let glob_level = 4;
-let difficulty = 8;
+let difficulty = 12;
 
 // event listeners
 document.getElementById("restart_button").addEventListener("click", init)
